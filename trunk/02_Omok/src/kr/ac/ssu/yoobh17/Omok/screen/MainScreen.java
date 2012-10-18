@@ -5,6 +5,8 @@ package kr.ac.ssu.yoobh17.Omok.screen;
 
 import java.util.List;
 
+import android.util.Log;
+
 import kr.ac.ssu.yoobh17.Omok.Assets;
 import kr.ac.ssu.yoobh17.Omok.framework.Game;
 import kr.ac.ssu.yoobh17.Omok.framework.Graphics;
@@ -29,6 +31,8 @@ public class MainScreen extends Screen {
 
 	@Override
 	public void update( float deltaTime ) {
+		
+//		Log.i( "MainScreen", "Frame Rate: " + ( 1 / deltaTime ) );
 
 		List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
 		
@@ -42,6 +46,8 @@ public class MainScreen extends Screen {
 		Graphics graphics = game.getGraphics();
 		
 		graphics.drawPixmap( Assets.GameScreen.mainScreen, 0, 0 );
+		
+		gameBoard.draw( graphics );
 		
 	}
 
