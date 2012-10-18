@@ -176,6 +176,13 @@ public class AndroidGraphics implements Graphics {
 	}
 
 	@Override
+	public void drawPixmap( Pixmap pixmap, float x, float y ) {
+
+		canvas.drawBitmap( ( (AndroidPixmap)pixmap ).bitmap, x, y, null );
+		
+	}
+
+	@Override
 	public int getWidth() {
 
 		return frameBuffer.getWidth();
