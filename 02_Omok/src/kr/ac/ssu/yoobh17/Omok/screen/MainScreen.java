@@ -10,15 +10,20 @@ import kr.ac.ssu.yoobh17.Omok.framework.Game;
 import kr.ac.ssu.yoobh17.Omok.framework.Graphics;
 import kr.ac.ssu.yoobh17.Omok.framework.Input.TouchEvent;
 import kr.ac.ssu.yoobh17.Omok.framework.Screen;
+import kr.ac.ssu.yoobh17.Omok.game.GameBoard;
 
 
 public class MainScreen extends Screen {
+	
+	private GameBoard gameBoard;
 
 	public MainScreen( Game game ) {
 
 		super( game );
 		
 		Assets.GameScreen.load( game.getGraphics() );
+		
+		gameBoard = new GameBoard();
 
 	}
 
@@ -26,13 +31,9 @@ public class MainScreen extends Screen {
 	public void update( float deltaTime ) {
 
 		List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
-		int len = touchEvents.size();
-
-		for ( int i = 0; i < len; i++ ) {
-
-			TouchEvent event = touchEvents.get( i );
-
-		}
+		
+		gameBoard.update( touchEvents );
+		
 	}
 
 	@Override
@@ -41,7 +42,6 @@ public class MainScreen extends Screen {
 		Graphics graphics = game.getGraphics();
 		
 		graphics.drawPixmap( Assets.GameScreen.mainScreen, 0, 0 );
-		
 		
 	}
 
