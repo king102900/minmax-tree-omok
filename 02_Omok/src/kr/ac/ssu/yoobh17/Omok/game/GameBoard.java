@@ -3,6 +3,7 @@
 package kr.ac.ssu.yoobh17.Omok.game;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.util.Log;
@@ -56,26 +57,33 @@ public class GameBoard implements OnStonePuttedListener {
 	}
 
 	
-	private int[][]		boardData;
-	private int			gameTurn;
-	private int			winner;
+	private int[][]				boardData;
+	private ArrayList<Stone> 	stoneData;
+	private int					gameTurn;
+	private int					winner;
 	
-	private User		user;
-	private	Computer	computer;
+	private User				user;
+	private	Computer			computer;
+
+	private User				user2;					//******************************
 	
-	private Judger 		judger;
+	private Judger 				judger;
 	
-	private Pixmap		pixmapBlack;
-	private Pixmap		pixmapWhite;
+	private Pixmap				pixmapBlack;
+	private Pixmap				pixmapWhite;
 	
 	public GameBoard(){
 		
 		boardData	= new int[BoardInfor.BOARD_SIZE][BoardInfor.BOARD_SIZE];
+		stoneData	= new ArrayList<Stone>();
 		user		= new User();
 		computer	= new Computer();
 		judger		= new Judger();
 		
 		user	.setOnStonePuttedListener( this );
+
+		user2		= new User();						//******************************
+		user2	.setOnStonePuttedListener( this );		//******************************
 		
 		pixmapBlack	= Assets.GameScreen.stoneBlack;
 		pixmapWhite	= Assets.GameScreen.stoneWhite;
@@ -98,7 +106,8 @@ public class GameBoard implements OnStonePuttedListener {
 		gameTurn 	= GameTurn.USER;
 		winner		= GameTurn.FINISH;
 		
-		user.init();
+		user.init();									
+		user2.init();									//******************************
 		
 	}
 	
@@ -116,7 +125,8 @@ public class GameBoard implements OnStonePuttedListener {
 			
 		case GameTurn.COMPUTER:
 
-			computer.update();
+//			computer.update();							//******************************
+			user2.update( touchEvents );				//******************************
 			
 			break;
 			
@@ -172,7 +182,8 @@ public class GameBoard implements OnStonePuttedListener {
 			
 		case GameTurn.COMPUTER:
 
-			computer.draw( graphics );
+//			computer.draw( graphics );					//******************************
+			user2.draw( graphics );						//******************************
 			
 			break;
 
@@ -202,7 +213,7 @@ public class GameBoard implements OnStonePuttedListener {
 			}
 			else{
 
-				boardData[point.getPosX()][point.getPosY()] = GameTurn.USER;
+				boardData[point.getPosX()][point.getPosY()] = GameTurn.COMPUTER;
 				
 			}
 			
