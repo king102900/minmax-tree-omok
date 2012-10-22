@@ -59,6 +59,7 @@ public class GameBoard implements OnStonePuttedListener {
 	
 	private int[][]				boardData;
 	private ArrayList<Stone> 	stoneData;
+	
 	private int					gameTurn;
 	private int					winner;
 	
@@ -81,6 +82,7 @@ public class GameBoard implements OnStonePuttedListener {
 		judger		= new Judger();
 		
 		user	.setOnStonePuttedListener( this );
+		computer.setOnStonePuttedListener( this );
 
 		user2		= new User();						//******************************
 		user2	.setOnStonePuttedListener( this );		//******************************
@@ -106,15 +108,16 @@ public class GameBoard implements OnStonePuttedListener {
 		gameTurn 	= GameTurn.USER;
 		winner		= GameTurn.FINISH;
 		
-		user.init();									
-		user2.init();									//******************************
+		user	.init();
+		computer.init();
+		user2	.init();								//******************************
 		
 	}
 	
 	public void update( List<TouchEvent> touchEvents ){
 		
 		Log.i( "GameBoard", "Game Turn: " + gameTurn );
-
+		
 		switch( gameTurn ){
 		
 		case GameTurn.USER:
@@ -125,7 +128,7 @@ public class GameBoard implements OnStonePuttedListener {
 			
 		case GameTurn.COMPUTER:
 
-//			computer.update();							//******************************
+			computer.update( boardData );				//******************************
 			user2.update( touchEvents );				//******************************
 			
 			break;
@@ -136,41 +139,8 @@ public class GameBoard implements OnStonePuttedListener {
 	public void draw( Graphics graphics ){
 
 		graphics.drawPixmap( Assets.GameScreen.omokBoard, 173, 10 );
-		
-		for( int i = 0; i < BoardInfor.BOARD_SIZE; i++ ){
-			
-			for( int j = 0; j < BoardInfor.BOARD_SIZE; j++){
-				
-				float posX;
-				float posY;
-				
-				switch ( boardData[i][j] ) {
-				
-				case BoardState.EMPTY:
-					
-					break;
 
-				case BoardState.USER:
-
-					posX = ( i * BoardInfor.ONE_BLOCK_LENGTH ) + BoardInfor.STARTING_POINT_X - ( pixmapBlack.getWidth() / 2 );
-					posY = ( j * BoardInfor.ONE_BLOCK_LENGTH ) + BoardInfor.STARTING_POINT_Y - ( pixmapBlack.getWidth() / 2 );
-					
-					graphics.drawPixmap( pixmapBlack, posX, posY );
-					
-					break;
-
-				case BoardState.COMPUTER:
-
-					posX = ( i * BoardInfor.ONE_BLOCK_LENGTH ) + BoardInfor.STARTING_POINT_X - ( pixmapWhite.getWidth() / 2 );
-					posY = ( j * BoardInfor.ONE_BLOCK_LENGTH ) + BoardInfor.STARTING_POINT_Y - ( pixmapWhite.getWidth() / 2 );
-					
-					graphics.drawPixmap( pixmapWhite, posX, posY );
-					
-					break;
-					
-				}
-			}
-		}
+		drawStone( graphics );
 
 		switch( gameTurn ){
 		
@@ -182,8 +152,8 @@ public class GameBoard implements OnStonePuttedListener {
 			
 		case GameTurn.COMPUTER:
 
-//			computer.draw( graphics );					//******************************
-			user2.draw( graphics );						//******************************
+			computer.draw( graphics );					//******************************
+			user2	.draw( graphics );					//******************************
 			
 			break;
 
@@ -195,11 +165,50 @@ public class GameBoard implements OnStonePuttedListener {
 			
 		}
 	}
+	
+	private void drawStone( Graphics graphics ){
+		
+		for( int k = 0; k < stoneData.size(); k++ ){
+			
+			Stone 	stone 	= stoneData.get( k );
+			
+			int		i 		= stone.getPoint().getPosX();
+			int		j 		= stone.getPoint().getPosY();
+			float 	posX 	= 0.0f;
+			float 	posY 	= 0.0f;
+			
+			switch ( stone.getGameTurn() ) {
+			
+			case BoardState.EMPTY:
+				
+				break;
+
+			case BoardState.USER:
+
+				posX = ( i * BoardInfor.ONE_BLOCK_LENGTH ) + BoardInfor.STARTING_POINT_X - ( pixmapBlack.getWidth() / 2 );
+				posY = ( j * BoardInfor.ONE_BLOCK_LENGTH ) + BoardInfor.STARTING_POINT_Y - ( pixmapBlack.getWidth() / 2 );
+				
+				graphics.drawPixmap( pixmapBlack, posX, posY );
+				
+				break;
+
+			case BoardState.COMPUTER:
+
+				posX = ( i * BoardInfor.ONE_BLOCK_LENGTH ) + BoardInfor.STARTING_POINT_X - ( pixmapWhite.getWidth() / 2 );
+				posY = ( j * BoardInfor.ONE_BLOCK_LENGTH ) + BoardInfor.STARTING_POINT_Y - ( pixmapWhite.getWidth() / 2 );
+				
+				graphics.drawPixmap( pixmapWhite, posX, posY );
+				
+				break;
+				
+			}
+		}
+	}
 
 	@Override
 	public int onStonePutted( Point point ) {
 		
-		int judgeResultOfRule = judger.judgeRule( boardData, point );
+		int judgeResultOfRule = judger.judgeRule( boardData, point, gameTurn );
 		int judgeResultOfWinner;
 		
 		switch ( judgeResultOfRule ) {
@@ -216,8 +225,10 @@ public class GameBoard implements OnStonePuttedListener {
 				boardData[point.getPosX()][point.getPosY()] = GameTurn.COMPUTER;
 				
 			}
+
+			stoneData.add( new Stone( gameTurn, new Point( point.getPosX(), point.getPosY() ) ) );
 			
-			judgeResultOfWinner = judger.jedgeWinner( boardData );
+			judgeResultOfWinner = judger.jedgeWinner( boardData, point, gameTurn );
 
 			if( Judger.JUDGE_WIN == judgeResultOfWinner ){
 				
@@ -247,9 +258,3 @@ public class GameBoard implements OnStonePuttedListener {
 	}
 
 }
-
-
-
-
-
-

@@ -7,9 +7,25 @@ import kr.ac.ssu.yoobh17.Omok.framework.Graphics;
 
 
 public class Computer {
-	
 
-	public void update(){
+	private OnStonePuttedListener	onStonePuttedListener;
+
+	public Computer(){
+		
+		
+	}
+
+	public void init(){
+		
+	}
+	
+	public void setOnStonePuttedListener( OnStonePuttedListener onStonePuttedListener ){
+		
+		this.onStonePuttedListener = onStonePuttedListener;
+		
+	}
+
+	public void update( int[][] boardData ){
 		
 		
 	}

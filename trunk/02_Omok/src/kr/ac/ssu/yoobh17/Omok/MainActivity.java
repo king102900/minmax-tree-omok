@@ -6,6 +6,7 @@ package kr.ac.ssu.yoobh17.Omok;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
+import android.os.Bundle;
 
 import kr.ac.ssu.yoobh17.Omok.framework.Screen;
 import kr.ac.ssu.yoobh17.Omok.framework.impl.AndroidGame;
