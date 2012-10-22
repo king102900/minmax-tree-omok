@@ -13,4 +13,16 @@ public class Stone {
 		
 	}
 
+	public int getGameTurn() {
+	
+		return gameTurn;
+	}
+
+	
+	public Point getPoint() {
+	
+		return point;
+	}
+
+	
 }
