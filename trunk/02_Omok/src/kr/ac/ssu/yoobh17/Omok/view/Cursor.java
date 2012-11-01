@@ -5,7 +5,7 @@ package kr.ac.ssu.yoobh17.Omok.view;
 
 import kr.ac.ssu.yoobh17.Omok.framework.Graphics;
 import kr.ac.ssu.yoobh17.Omok.framework.Pixmap;
-import kr.ac.ssu.yoobh17.Omok.game.GameBoard.BoardInfor;
+import kr.ac.ssu.yoobh17.Omok.game.Board.BoardInfor;
 
 
 public class Cursor {

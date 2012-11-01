@@ -15,7 +15,7 @@ import kr.ac.ssu.yoobh17.Omok.view.Cursor;
 
 
 public class User {
-
+	
 	private Button					buttonUp;
 	private Button					buttonDown;
 	private Button					buttonRight;
