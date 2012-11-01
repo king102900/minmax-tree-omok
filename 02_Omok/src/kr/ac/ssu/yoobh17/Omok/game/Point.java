@@ -3,7 +3,7 @@
 package kr.ac.ssu.yoobh17.Omok.game;
 
 
-import kr.ac.ssu.yoobh17.Omok.game.GameBoard.BoardInfor;
+import kr.ac.ssu.yoobh17.Omok.game.Board.BoardInfor;
 
 
 public class Point {	

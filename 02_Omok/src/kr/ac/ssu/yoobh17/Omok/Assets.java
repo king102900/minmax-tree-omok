@@ -41,6 +41,7 @@ public class Assets {
 			buttonPut 	= graphics.newPixmap( "Button_Put.png"		, PixmapFormat.ARGB4444 );
 			
 		}
+		
 	}
 
 }
