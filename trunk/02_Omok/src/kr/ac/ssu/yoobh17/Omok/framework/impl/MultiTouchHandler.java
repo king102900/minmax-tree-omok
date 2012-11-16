@@ -98,6 +98,8 @@ public class MultiTouchHandler implements TouchHandler {
 					touchEvent.pointer 	= pointerId;
 					touchEvent.x 		= touchX[pointerId] = (int) ( event.getX( pointerIndex ) * scaleX );
 					touchEvent.y 		= touchY[pointerId] = (int) ( event.getY( pointerIndex ) * scaleY );
+
+					touchEventsBuffer.add( touchEvent );
 					
 				}
 				
