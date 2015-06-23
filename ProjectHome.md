@@ -1,0 +1,1 @@
+MINMAX TREE를 이용한 오목 AI 구현
